@@ -1,40 +1,106 @@
-# react-app-simple-hello-world
-A simple Hello World Application using [React JS](https://reactjs.org/docs/getting-started.html), a JavaScript library to make awesome UI by Facebook. 
+# react.js hello world
+---
+first, you should install node and npm.
 
-This application uses [React JS](https://reactjs.org/docs/getting-started.html) component oriented UI creation paradigm. All components are written in [JSX](https://reactjs.org/docs/jsx-in-depth.html) and ES6 style and are
-combined to get a single build for production purpose using [Webpack 4](https://webpack.js.org/concepts/). 
+1. create directory  
+    `mkdir helloworld && cd helloworld`
 
-ES6 `module` creation along with `import /export` is used. [Babel](https://babeljs.io/docs/en/babel-preset-react) is used to *transpile* all [JSX](https://reactjs.org/docs/jsx-in-depth.html) code to vanilla JavaScript code. To install all the dependecies `npm` is used.
+2. init npm  
+    `npm init`
 
-For UI creation [HTML5](https://www.w3schools.com/html/html5_intro.asp) and [CSS3](https://www.w3schools.com/css/) are used. [Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout), the new feature of [CSS3](https://www.w3schools.com/css/) is used for layout creation purpose.
+3. install webpack and webpack-dev-server  
+    `npm install webpack webpack-dev-server --save`
 
-This is a *responsive web application* for viewing in both Mobile and Desktop.
+4. install react and react-dom  
+    `npm install react react-dom --save`
 
+5. install babel etc.  
+    `npm install babel-core babel-loader babel-preset-react babel-preset-es2015 --save`
 
-## Features
-- This is just a basic Hello World program
+6. add start scripts to package.json
+```javascript
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "webpack-dev-server --hot"
+    }
+```
 
+7. touch webpack.config.js
+```javascript
+    var config = {
+      entry: './main.js',
 
-## Installation
+      output: {
+        path: './',
+        filename: 'index.js'
+      },
 
-1. Clone the repository using `git clone https://github.com/anijitsahu/react-app-simple-hello-world.git` from `Git Bash / Command Prompt`
-2. Navigate inside the directory by `cd react-app-simple-hello-world`
-3. Install all the necessary dependecies by using `npm install` (optional)
-4. Navigate to the directory `dist`
-5. Open `index.html` page in a web browser 
- 
-*tested with <img src="screenshots/chrome.png" width="20px" title="Google Chrome">Google Chrome v70 and <img src="screenshots/firefox.png" width="25px" title="Firefox Developer edition">Mozilla Firefox Developer Editon*  
+      devServer: {
+        inline: true,
+        port: 7777
+      },
 
-## Screenshots
+      module: {
+        loaders: [
+          {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+              presets: ['es2015', 'react']
+            }
+          }
+        ]
+      }
+    }
 
-Some screens of the application is given below for better understanding. 
+    module.exports = config;
+```
 
-Desktop as well as Mobile version of the screenshots are given side by side.
+8. touch index.html
+```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>react helloworld</title>
+      </head>
+      <body>
+        <div id="app"></div>
+        <script src="index.js" charset="utf-8"></script>
+      </body>
+    </html>
+```
 
-<p> Initial screen <br/> 
- <img src="screenshots/desktop 1.png" width="590px" title="initial screen"/>
- <img src="screenshots/mobile 1.png" width="230px" title="initial screen"/> 
-</p>
- 
+9. touch App.jsx
+```javascript
+    import React from 'react';
 
+    class App extends React.Component {
+      render() {
+        return (
+          <div>simon, helloworld!!!</div>
+        );
+      }
+    }
 
+    export default App;
+```
+
+10. touch main.js
+```javascript
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+
+    import App from './App.jsx';
+
+    ReactDOM.render(<App />, document.getElementById('app'));
+```
+
+11. start server  
+    `npm start`
+
+12. open browser: [http://localhost:7777](http://localhost:7777)
+
+---
+if you clone this repository to local, just `npm install` and `npm start`.
